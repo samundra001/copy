@@ -29,6 +29,8 @@ res.render('room', { roomId: req.params.rooms})
 })
 
 
+
+
 io.on('connection', socket => {
   socket.on('join-room', (roomId, userId) => {
     socket.join(roomId)
