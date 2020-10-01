@@ -15,16 +15,16 @@ app.use('/peerjs', peerServer);
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
-app.get('/home',(req,res)=>{
+app.get('/',(req,res)=>{
   res.render('dashboard')
 })
 
-app.get('/', (req, res) => {
-res.redirect(`/${uuidV4()}`)
+app.get('/room', (req, res) => {
+res.redirect(`/room/${uuidV4()}`)
 })
 
 
-app.get('/:rooms', (req, res) => {
+app.get('/room/:rooms', (req, res) => {
 res.render('room', { roomId: req.params.rooms})
 })
 
