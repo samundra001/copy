@@ -20,7 +20,7 @@ app.get('/home',(req,res)=>{
 })
 
 app.get('/', (req, res) => {
-res.redirect(`/room/${uuidV4()}`)
+res.redirect(`/${uuidV4()}`)
 })
 
 
