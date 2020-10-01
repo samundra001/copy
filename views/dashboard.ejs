@@ -25,9 +25,11 @@
             <li class="nav-item active">
               <a class="nav-link text-success" href="#home">Home <span class="sr-only">(current)</span></a>
             </li>
+            <div id="room">
             <li class="nav-item">
               <a class="nav-link text-success" href="#createroom">Create Room</a>
             </li>
+          </div>
             <li class="nav-item">
                 <a class="nav-link text-success" href="#joinroom">Join Room</a>
               </li>
@@ -71,7 +73,7 @@
   <img class="front_image" src="img/createroom.jpg"/> 
   <div class="centered"><h2>CREATE A ROOM</h2>
    <button class="createroom_button" text-success>
-      createroom
+    <a href="/room"> createroom</a> 
    </button>
    </div>
   </section>
@@ -86,7 +88,7 @@
           <input type="string" class="form-control" id="roomId"  placeholder=" RoomId Here">
          </div> 
 
-        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="submit" class="btn btn-success"><a href="room/:room">Join</a></button>
       </form>
          </div>
     </section>

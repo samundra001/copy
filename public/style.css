@@ -150,6 +150,11 @@ img{
     height: 80px;
     font-size: large;
   }
+   
+  a:hover{
+    text-decoration: none;
+    }
+  
 
   .btn:hover {
     border-radius: 50px;
