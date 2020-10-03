@@ -137,3 +137,7 @@ document.getElementById("leave_meeting").onclick= ()=>{
   location.href="/";
 }
 socket.heartbeatTimeout = 2000; 
+
+const disconnect = () => {
+  socket.disconnect();
+}
