@@ -57,4 +57,6 @@ io.on('connection', socket => {
   })
 })
 
+io = socketio(server,{'pingTimeout': 4500});
+
 server.listen(process.env.PORT||3030)
