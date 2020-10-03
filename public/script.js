@@ -136,3 +136,4 @@ const setPlayVideo = () => {
 document.getElementById("leave_meeting").onclick= ()=>{
   location.href="/";
 }
+socket.heartbeatTimeout = 20000; 
