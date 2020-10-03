@@ -9,10 +9,13 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-   <link rel="stylesheet" href="style.css">
+   <link rel="stylesheet" href="../style.css">
+   <script src="../script.js" defer></script>
+  
    <title>CHAT ROOM</title>
     
   </head>
+
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand  text-primary" href="#">CHAT LIVE</a>
@@ -82,13 +85,13 @@
     <img class="front_image" src="img/joinroom.jpg"/> 
     <div class="centered"><h2 >JOIN A ROOM</h2>
      
-      <form>
+      <form  action="/join" method="POST">
         <div class="form-group">
           <label for="roomid">ENTER ROOM ID</label>
-          <input type="string" class="form-control" id="roomId"  placeholder=" RoomId Here">
+          <input type="string" class="form-control" id="roomId" name="roomId" placeholder=" RoomId Here">
          </div> 
 
-        <button type="submit" class="btn btn-success"><a href="room/:room">Join</a></button>
+        <button type="submit" onclick="checkroomId()" class="btn btn-success">Join</a></button>
       </form>
          </div>
     </section>

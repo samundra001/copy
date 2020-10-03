@@ -1,4 +1,4 @@
-const socket = io('/')
+const socket = io.connect('/')
 const videoGrid = document.getElementById('video-grid')
 const myPeer = new Peer(undefined, {
   path: '/peerjs',
@@ -131,4 +131,8 @@ const setPlayVideo = () => {
     <span>Play Video</span>
   `
   document.querySelector('.main__video_button').innerHTML = html;
+}
+
+document.getElementById("leave_meeting").onclick= ()=>{
+  location.href="/";
 }
