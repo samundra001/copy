@@ -1,7 +1,6 @@
 const express = require('express')
  const app = express()
-// const cors = require('cors')
-//app.use(cors())
+
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 const { ExpressPeerServer } = require('peer');
@@ -12,7 +11,7 @@ const peerServer = ExpressPeerServer(server, {
 });
 const { v4: uuidV4 } = require('uuid')
 
-app.use('/peerjs', peerServer);
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
@@ -30,8 +29,7 @@ app.get('/room/:rooms', (req, res) => {
 res.render('room', { roomId: req.params.rooms})
 
 })
-const url=require('url')
-const querystring = require('querystring');
+
 
 app.post('/join',(req,res)=>{
   res.redirect(`/room/${req.body.roomId}`)
