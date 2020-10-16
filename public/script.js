@@ -2,7 +2,7 @@
 const socket = io.connect('/')
 const videoGrid = document.getElementById('video-grid')
 const myPeer = new Peer(undefined, {
- path:'/peerjs',
+ 
   host: '/',
   port: '3001'
 })
@@ -11,7 +11,7 @@ const myVideo = document.createElement('video')
 myVideo.muted = true;
 const peers = {}
 navigator.mediaDevices.getUserMedia({
-  video: true,
+  video: true ,
   audio: true
 }).then(stream => {
   myVideoStream = stream;
@@ -23,6 +23,8 @@ navigator.mediaDevices.getUserMedia({
       addVideoStream(video, userVideoStream)
     })
   })
+
+  
 
   socket.on('user-connected', userId => {
     connectToNewUser(userId, stream)
@@ -102,6 +104,54 @@ const playStop = () => {
   }
 }
 
+const shareScreen = () =>{
+    
+ navigator.mediaDevices.getDisplayMedia({  video: {  
+      mediaSource: "screen",  
+      width: { max: '1920' },  
+      height: { max: '1080' },   
+      frameRate: { max: '10' }  
+    }  ,
+    audio: true}).then(stream => {
+      myVideoStream = stream;
+      addVideoStream(myVideo, stream)
+      myPeer.on('call', call => {
+        call.answer(stream)
+        const video = document.createElement('video')
+        call.on('stream', userVideoStream => {
+          addVideoStream(video, userVideoStream)
+        })
+      })
+    })
+  }
+ 
+//   let enabled = myVideoStream.sharing.enabled;
+//  if(enabled){
+//    myVideoStream.getDisplayMedia()[0].enabled=false;
+//    setStartShare()
+//  }else{
+//    setStopShare()
+//    myVideoStream.getDisplayMedia()[0].enabled=true;
+//  }
+ 
+
+  
+//  const setStopShare = ()=>{
+//  const html = ` 
+//  <i class="fas fa-share"</i>
+//  <span> share </span>
+//  `
+//  document.querySelector('.main_share_button').innerHTML=html;
+//  }
+//  const setStartShare = ()=>{
+//    const html =`
+//   <i class="fas fa-sign-out-alt"></i>
+//   <span> stopSharing </span>
+//    `
+//    document.querySelector('.main_share_button').innerHTML=html;
+//  }
+
+
 const setMuteButton = () => {
   const html = `
     <i class="fas fa-microphone"></i>
@@ -136,9 +186,4 @@ const setPlayVideo = () => {
 
 document.getElementById("leave_meeting").onclick= ()=>{
   location.href="/";
-}
-socket.heartbeatTimeout = 2000; 
-
-const disconnect = () => {
-  socket.disconnect();
 }
