@@ -6,6 +6,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <script>
+      function ReadCookie(){
+        var allcookies = document.cookie;
+              console.log(allcookies)
+      }
+    </script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -47,11 +53,15 @@
           </ul>
           <ul class="nav navbar-nav ml-auto justify-content-end">
               <li class="nav-item">
-                <a class="nav-link text-success" href="/login"><i class="fa fa-sign-in"></i>Sign in</a>
+                <a class="nav-link text-success" href="/login" onclick="ReadCookie()"><i class="fa fa-sign-in"></i>Sign in</a>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link text-success " href="/register"><i class="fa fa-sign-out"></i>Sign up</a>
+                <a class="nav-link text-success " href="/register"><i class="fa fa-user-plus"></i>Sign up</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link text-success " href="/logout"><i class="fa fa-sign-out"></i>Sign out</a>
               </li>
          
           </ul>

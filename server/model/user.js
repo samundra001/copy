@@ -22,11 +22,15 @@ const userSchema = mongoose.Schema({
         minlenght:6
     },
 
-    fullname:{
+    firstname:{
         type:String,
         maxlenght:100
     },
    
+    lastname:{
+        type:String,
+        maxlenght:100
+    },
    
     token:{
         type:String
