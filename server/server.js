@@ -42,7 +42,7 @@ app.get('/room',auth,(req, res) => {
 
 
 app.get('/room/:rooms', (req, res) => {
-res.render('room', { roomId: req.params.rooms})
+res.render('room', { roomId: req.params.rooms} )
 
 })
 
@@ -92,9 +92,11 @@ app.post('/login',(req,res)=>{
   user.generateToken((err,user)=>{
       if(err) return res.status(400).send(err);
       res.cookie('auth',user.token).json({
+        token:user.token,
         isAuth:true,
         id:user._id,
-        email:user.email
+        firstname:user.firstname,
+        lastname:user.lastname
     })
   })
 })
@@ -110,6 +112,9 @@ app.get('/logout',auth,(req,res)=>{
  })
 
 })
+
+
+
 
 
 
