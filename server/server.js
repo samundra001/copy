@@ -72,7 +72,9 @@ app.post('/register',(req,res)=>{
       if(err) return res.json({
           success:false
       });
-      res.redirect(`/login`)
+      res.json({
+        success:"you have successfully register"
+      })
 
   })
 })
@@ -125,9 +127,9 @@ io.on('connection', socket => {
     socket.join(roomId)
     socket.to(roomId).broadcast.emit('user-connected', userId);
     // messages
-    socket.on('message', (message) => {
+    socket.on('message', (message,person) => {
       //send message to the same room
-      io.to(roomId).emit('createMessage', message)
+      io.to(roomId).emit('createMessage', message,person)
   }); 
 
     socket.on('disconnect', () => {

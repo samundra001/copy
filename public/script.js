@@ -1,8 +1,8 @@
-
-const socket = io.connect('/')
+console.log(person)
+const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
 const myPeer = new Peer(undefined, {
- 
+  
   host: '/',
   port: '3001'
 })
@@ -11,7 +11,7 @@ const myVideo = document.createElement('video')
 myVideo.muted = true;
 const peers = {}
 navigator.mediaDevices.getUserMedia({
-  video: true ,
+  video: true,
   audio: true
 }).then(stream => {
   myVideoStream = stream;
@@ -24,22 +24,22 @@ navigator.mediaDevices.getUserMedia({
     })
   })
 
-  
-
   socket.on('user-connected', userId => {
     connectToNewUser(userId, stream)
   })
   // input value
   let text = $("input");
+  let chat = $("#chat_name")[0].textContent;
+  console.log(chat)
   // when press enter send message
   $('html').keydown(function (e) {
     if (e.which == 13 && text.val().length !== 0) {
-      socket.emit('message', text.val());
+      socket.emit('message', text.val(),chat);
       text.val('')
     }
   });
-  socket.on("createMessage", message => {
-    $("ul").append(`<li class="message"><b>User</b><br/>${message}</li>`);
+  socket.on("createMessage", (message,person) => {
+    $("ul").append(`<li class="message"><b>${person}</b><br/>${message}</li>`);
     scrollToBottom()
   })
 })
@@ -50,12 +50,9 @@ socket.on('user-disconnected', userId => {
 
 myPeer.on('open', id => {
   socket.emit('join-room', ROOM_ID, id)
+  console.log(id)
+  localStorage.setItem('userId', userId)
 })
- 
-function loadname(){
-  var name = "samundra"
-  document.getElementById("myName").innerHTML = name
-}
 
 function connectToNewUser(userId, stream) {
   const call = myPeer.call(userId, stream)
@@ -109,54 +106,6 @@ const playStop = () => {
   }
 }
 
-const shareScreen = () =>{
-    
- navigator.mediaDevices.getDisplayMedia({  video: {  
-      mediaSource: "screen",  
-      width: { max: '1920' },  
-      height: { max: '1080' },   
-      frameRate: { max: '10' }  
-    }  ,
-    audio: true}).then(stream => {
-      myVideoStream = stream;
-      addVideoStream(myVideo, stream)
-      myPeer.on('call', call => {
-        call.answer(stream)
-        const video = document.createElement('video')
-        call.on('stream', userVideoStream => {
-          addVideoStream(video, userVideoStream)
-        })
-      })
-    })
-  }
- 
-//   let enabled = myVideoStream.sharing.enabled;
-//  if(enabled){
-//    myVideoStream.getDisplayMedia()[0].enabled=false;
-//    setStartShare()
-//  }else{
-//    setStopShare()
-//    myVideoStream.getDisplayMedia()[0].enabled=true;
-//  }
- 
-
-  
-//  const setStopShare = ()=>{
-//  const html = ` 
-//  <i class="fas fa-share"</i>
-//  <span> share </span>
-//  `
-//  document.querySelector('.main_share_button').innerHTML=html;
-//  }
-//  const setStartShare = ()=>{
-//    const html =`
-//   <i class="fas fa-sign-out-alt"></i>
-//   <span> stopSharing </span>
-//    `
-//    document.querySelector('.main_share_button').innerHTML=html;
-//  }
-
-
 const setMuteButton = () => {
   const html = `
     <i class="fas fa-microphone"></i>
@@ -188,7 +137,56 @@ const setPlayVideo = () => {
   `
   document.querySelector('.main__video_button').innerHTML = html;
 }
+var displayMediaOptions = {
+  video: {
+    cursor: "always"
+  },
+  audio: false
+};
+function dumpOptionsInfo() {
+  const videoTrack = myVideo.srcObject.getVideoTracks()[0];
 
-document.getElementById("leave_meeting").onclick= ()=>{
-  location.href="/";
+  console.info("Track settings:");
+  console.info(JSON.stringify(videoTrack.getSettings(), null, 2));
+  console.info("Track constraints:");
+  console.info(JSON.stringify(videoTrack.getConstraints(), null, 2));
 }
+const shareScreen = () => {
+  async function startCapture() {
+    // logElem.innerHTML = "";
+    console.info(myVideoStream);
+    
+    
+    try {
+      
+      myVideo.srcObject = await navigator.mediaDevices.getDisplayMedia(
+        displayMediaOptions
+      )
+      // dumpOptionsInfo();
+      
+      
+    } 
+    catch (err) {
+      // console.error("Error: " + err);
+    }
+  }
+  startCapture()
+  myVideoStream.getVideoTracks()[0].enabled = true;
+  addVideoStream(myVideo, myVideoStream)
+}
+
+// document.querySelector('.main__share_button').addEventListener(
+//   "click",
+//   function (evt) {
+//     startCapture();
+//   },
+//   false
+// );
+
+// stopElem.addEventListener(
+//   "click",
+//   function (evt) {
+//     stopCapture();
+//   },
+//   false
+// );
